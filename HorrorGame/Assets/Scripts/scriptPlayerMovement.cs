@@ -5,7 +5,7 @@ using UnityEngine;
 public class scriptPlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
-    public float speed = 12f;
+    public float speed;
 
     private Vector3 velocity;
     private float gravity = 15f;
@@ -32,28 +32,13 @@ public class scriptPlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (Input.GetButton("Fire3") && onGround && Input.GetAxis("Vertical") >= 0) {
-            speed = 9;
-            Debug.Log("spring");
-        } else if(speed == 9 && !onGround && Input.GetAxis("Vertical") >= 0) {
-            speed = 9;
-        } else {
-            speed = 3f;
-        }
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-
-        
+ 
         Vector3 move = transform.right * x + transform.forward * z;
         controller.Move(move * speed * Time.deltaTime);
 
         velocity.y -= gravity * Time.deltaTime;
-
-        if (Input.GetButtonDown("Jump") && onGround) {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * -gravity);
-            Debug.Log("jump");
-        }
         
         //Debug.Log(onGround);
         controller.Move(velocity * Time.deltaTime);
