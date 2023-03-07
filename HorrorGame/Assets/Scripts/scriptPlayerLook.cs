@@ -9,6 +9,7 @@ public class scriptPlayerLook : MonoBehaviour
     public Transform playerBody;
 
     private float xRotation = 0f;
+    public Canvas ui;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,14 +32,25 @@ public class scriptPlayerLook : MonoBehaviour
         {
             interact();
         }
+
+        RaycastHit hitInfo = new RaycastHit();
+        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 3);
+        if (hit && hitInfo.transform.gameObject.tag == "Interactable")
+        {
+            ui.enabled = true;
+        }
+        else
+        {
+            ui.enabled = false;
+        }
     }
 
     private void interact()
     {
         RaycastHit hitInfo = new RaycastHit();
-        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 3, 9);
-
-        if (hit)
+        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 3);
+        ui.enabled = true;
+        if (hit && hitInfo.transform.gameObject.tag == "Interactable")
         {
             hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material.color = new Color(.5f, .3f, .3f);
             Debug.Log("hit");
