@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,5 +26,22 @@ public class scriptPlayerLook : MonoBehaviour
         
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            interact();
+        }
+    }
+
+    private void interact()
+    {
+        RaycastHit hitInfo = new RaycastHit();
+        bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo, 3, 9);
+
+        if (hit)
+        {
+            hitInfo.transform.gameObject.GetComponent<MeshRenderer>().material.color = new Color(.5f, .3f, .3f);
+            Debug.Log("hit");
+        }
     }
 }
