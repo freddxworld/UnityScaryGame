@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - OuterWall
   - Door
+  - innerWall
   layers:
   - Default
   - TransparentFX
